@@ -10,6 +10,7 @@ import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -34,12 +35,14 @@ public class Board extends JPanel {
 		draftboard = new Draftboard();
 		
 		// Reads in images from filenames
+		/*
 		try {
 			circleNode = ImageIO.read(new File("circle.jpg"));
 			squareNode = ImageIO.read(new File("square.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		*/
 		
 		// Sets Board size to size of screen (w/scrollbars)
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

@@ -1,9 +1,18 @@
 package view;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import model.ChatMessage;
 
 public class Chatbox extends JPanel {
 	
@@ -24,9 +33,25 @@ public class Chatbox extends JPanel {
 	 * Use button.addActionlistener(new SendListener()) and then write the send message
 	 * code in actionPerformed(ActionEvent e).
 	 */
+	//private ArrayList<ChatMessage> messageList;
+	
 	
 	public Chatbox() {
-		
+		JLabel usernameLabel = new JLabel("Username: ");
+		this.add(usernameLabel);
+		JTextField usernameTextField = new JTextField();
+		this.add(usernameTextField);
+		JTextField userMessage = new JTextField();
+		this.add(userMessage);
+		JButton login = new JButton("Login");
+		JButton logout = new JButton("Logout");
+		JButton enter = new JButton("Enter");
+		this.add(login);
+		this.add(logout);
+		this.add(enter);
+		JList<String> messageLog;
+		messageLog.add("hello!");
+		this.add(messageLog);
 	}
 	
 	public class SendListener implements ActionListener {

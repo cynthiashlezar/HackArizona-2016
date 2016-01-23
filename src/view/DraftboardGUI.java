@@ -29,7 +29,7 @@ public class DraftboardGUI extends JFrame {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		board = new Board();
-		
+		chatbox = new Chatbox();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setSize(screenSize);
 		
