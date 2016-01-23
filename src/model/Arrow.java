@@ -31,4 +31,12 @@ public class Arrow {
 			end = this.destination.topLeft();
 		}
 	}
+	
+	public Point getStart() {
+		return start;
+	}
+	
+	public Point getEnd() {
+		return end;
+	}
 }
