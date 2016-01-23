@@ -1,4 +1,7 @@
+
+package model;
 import java.awt.Point;
+
 
 public class Arrow {
 	private Node base, destination; //Connecting one idea to the next.
