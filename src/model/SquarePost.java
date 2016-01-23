@@ -24,28 +24,28 @@ public class SquarePost extends Node {
 	@Override
 	//returns the top right point of the edge of the square
 	public Point topRight() {
-		Point edge = new Point ();
+		Point edge = new Point (this.location.x + radius, this.location.y - radius);
 		return edge;
 	}
 
 	@Override
 	//returns the bottom left point of the edge of the square
 	public Point botLeft() {
-		Point edge = new Point ();
+		Point edge = new Point (this.location.x - radius, this.location.y + radius);
 		return edge;
 	}
 
 	@Override
 	//returns the top left point of the edge of the square
 	public Point topLeft() {
-		Point edge = new Point ();
+		Point edge = new Point (this.location.x - radius, this.location.y - radius);
 		return edge;
 	}
 
 	@Override
 	//returns the bottom right point of the edge of the square
 	public Point botRight() {
-		Point edge = new Point ();
+		Point edge = new Point (this.location.x + radius, this.location.y + radius);
 		return edge;
 	}
 	
