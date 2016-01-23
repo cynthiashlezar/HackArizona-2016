@@ -50,8 +50,8 @@ public class Chatbox extends JPanel {
 		this.add(logout);
 		this.add(enter);
 		JList<String> messageLog;
-		messageLog.add("hello!");
-		this.add(messageLog);
+		//messageLog.add("hello!");
+		//this.add(messageLog);
 	}
 	
 	public class SendListener implements ActionListener {
