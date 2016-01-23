@@ -37,6 +37,8 @@ public class Board extends JPanel {
 		draftboard.addNode(new CirclePost("whatever", "lol", new Point(400, 400)));
 		draftboard.addNode(new CirclePost("whateverrrrrr", "lol", new Point(500, 400)));
 		draftboard.addNode(new CirclePost("whateverrrrrr", "lol", new Point(600, 500)));
+		draftboard.getNodes().get(0).addNodeRef(draftboard.getNodes().get(1));
+		draftboard.getNodes().get(0).addNodeRef(draftboard.getNodes().get(2));
 		
 		// Reads in images from filenames
 <<<<<<< HEAD
@@ -64,6 +66,8 @@ public class Board extends JPanel {
 		// Sets the visible size of the Board to these dimensions & sets background color
 		this.setPreferredSize(new Dimension(2000, 1000));
 		this.setBackground(Color.WHITE);
+		
+		repaint();
 	}
 	
 	/* 

@@ -20,6 +20,7 @@ public abstract class Node {
 		this.title = title;
 		this.text = text;
 		this.location = location;
+		nodeRefs = new ArrayList<Node>();
 	}
 	
 	//returns the title
