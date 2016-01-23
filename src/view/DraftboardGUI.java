@@ -18,6 +18,7 @@ import javax.swing.JScrollPane;
 
 public class DraftboardGUI extends JFrame {
 	private Board board;
+	private Chatbox chatbox;
 	
 	public static void main(String[] args) {
 		(new DraftboardGUI()).setVisible(true);
@@ -33,14 +34,19 @@ public class DraftboardGUI extends JFrame {
 		this.setSize(screenSize);
 		
 		// JScrollPane makes the Board scrollable.
-		JScrollPane cs = new JScrollPane(board);
-		cs.setPreferredSize(new Dimension(screenSize));
-		this.add(cs);
+		JScrollPane boardScroll = new JScrollPane(board);
+		boardScroll.setPreferredSize(new Dimension(screenSize));
+		this.add(boardScroll);
 		
 		// This is where the toolbox will go....eventually.......
 		JPanel toolboxPanel = new JPanel(new BorderLayout());
-		toolboxPanel.setPreferredSize(new Dimension(screenSize.width, 400));
+		toolboxPanel.setPreferredSize(new Dimension(screenSize.width, 200));
 		this.add(toolboxPanel, BorderLayout.PAGE_END);
+		
+		// Chatbox over here.
+		JScrollPane chatboxScroll = new JScrollPane(chatbox);
+		chatboxScroll.setPreferredSize(new Dimension(400, screenSize.height));
+		this.add(chatboxScroll, BorderLayout.EAST);
 	}
 
 }
