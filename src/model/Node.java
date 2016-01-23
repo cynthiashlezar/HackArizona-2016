@@ -1,4 +1,8 @@
+
+package model;
 import java.util.ArrayList;
+
+
 public abstract class Node {
 	
 	private String title;
