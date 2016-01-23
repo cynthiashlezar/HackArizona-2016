@@ -9,6 +9,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+/*
+ * This is the code for the actual window, so it extends JFrame.
+ * JFrames are basically windows and they hold a bunch of JPanels.
+ * The JPanels generally have the actual functional stuff on them!
+ * Board extends JPanel.
+ */
 
 public class DraftboardGUI extends JFrame {
 	private Board board;
@@ -18,6 +24,7 @@ public class DraftboardGUI extends JFrame {
 	}
 	
 	public DraftboardGUI() {
+		// if you close it the program exits
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		board = new Board();
@@ -25,10 +32,12 @@ public class DraftboardGUI extends JFrame {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setSize(screenSize);
 		
+		// JScrollPane makes the Board scrollable.
 		JScrollPane cs = new JScrollPane(board);
 		cs.setPreferredSize(new Dimension(screenSize));
 		this.add(cs);
 		
+		// This is where the toolbox will go....eventually.......
 		JPanel toolboxPanel = new JPanel(new BorderLayout());
 		toolboxPanel.setPreferredSize(new Dimension(screenSize.width, 400));
 		this.add(toolboxPanel, BorderLayout.PAGE_END);
