@@ -56,7 +56,14 @@ public abstract class Node {
 	public void setLocation (Point location) {
 		this.location = location;
 	}
-
+	
+	public ArrayList<Node> addNodeRef(Node newRef) { //treat this like a void method
+		nodeRefs.add(newRef);
+		return nodeRefs;
+	}
+	public void deleteRef(Node ref) { //deletes a reference to a node
+		nodeRefs.remove(ref);
+	}
 	
 	
 	
