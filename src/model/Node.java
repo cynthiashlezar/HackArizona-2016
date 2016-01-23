@@ -10,9 +10,13 @@ public abstract class Node {
 	private String text;
 	private ArrayList<Node> nodeRefs;
 	
-	public Node (String title, String text) {
+	abstract Point topRight();
+	abstract Point botLeft();
+	
+	public Node (String title, String text, Point location) {
 		this.title = title;
 		this.text = text;
+		this.location = location;
 	}
 	
 	public String getTitle () {
