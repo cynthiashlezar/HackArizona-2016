@@ -1,9 +1,11 @@
 
 package model;
+import java.awt.Point;
 import java.util.ArrayList;
 
 public abstract class Node {
 	
+	private Point location;
 	private String title;
 	private String text;
 	private ArrayList<Node> nodeRefs;
@@ -33,7 +35,9 @@ public abstract class Node {
 		this.text = text;
 	}
 	
-	
+	public Point getLocation () {
+		return location;
+	}
 	
 	
 	
