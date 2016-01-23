@@ -44,9 +44,8 @@ public class DraftboardGUI extends JFrame {
 		this.add(toolboxPanel, BorderLayout.PAGE_END);
 		
 		// Chatbox over here.
-		JScrollPane chatboxScroll = new JScrollPane(chatbox);
-		chatboxScroll.setPreferredSize(new Dimension(400, screenSize.height));
-		this.add(chatboxScroll, BorderLayout.EAST);
+		chatbox.setPreferredSize(new Dimension(400, screenSize.height));
+		this.add(chatbox, BorderLayout.EAST);
 	}
 	
 	
