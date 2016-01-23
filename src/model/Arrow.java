@@ -11,6 +11,8 @@ public class Arrow {
 	public Arrow(Node base, Node destination) {
 		this.base = base;
 		this.destination = destination;
+		int xOffset = this.base.getLocation().x - this.destination.getLocation().x;
+		int yOffset = this.base.getLocation().y - this.destination.getLocation().y;
 		
 	}
 	
