@@ -12,6 +12,9 @@ public abstract class Node {
 	
 	abstract Point topRight();
 	abstract Point botLeft();
+	abstract Point topLeft();
+	abstract Point botRight();
+	
 	
 	public Node (String title, String text, Point location) {
 		this.title = title;
@@ -42,6 +45,7 @@ public abstract class Node {
 	public Point getLocation () {
 		return location;
 	}
+
 	
 	
 	

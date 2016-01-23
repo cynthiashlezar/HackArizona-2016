@@ -27,6 +27,18 @@ public class CirclePost extends Node {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	Point topLeft() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	Point botRight() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }
