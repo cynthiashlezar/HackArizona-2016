@@ -17,7 +17,7 @@ public class CirclePost extends Node {
 	//setting values for shape and radius
 	public CirclePost (String title, String text, Point location) {
 		super(title, text, location);
-		shape = "circle.jpeg";
+		shape = "circle.jpg";
 		radius = 100;
 	}
 	

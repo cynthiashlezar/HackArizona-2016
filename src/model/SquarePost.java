@@ -16,7 +16,7 @@ public class SquarePost extends Node {
 	//setting values for shape and radius
 	public SquarePost (String title, String text, Point location) {
 		super(title, text, location);
-		shape = "square.jpeg";
+		shape = "square.jpg";
 		radius = 100;
 	}
 
