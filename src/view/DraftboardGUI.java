@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.UnknownHostException;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -40,7 +41,11 @@ public class DraftboardGUI extends JFrame {
 		
 		// This is where the toolbox will go....eventually.......
 		JPanel toolboxPanel = new JPanel(new BorderLayout());
+		JButton circle = new JButton("Circle");
+		JButton square = new JButton("Square");
 		toolboxPanel.setPreferredSize(new Dimension(screenSize.width, 200));
+		toolboxPanel.add(circle);
+		toolboxPanel.add(square);
 		this.add(toolboxPanel, BorderLayout.PAGE_END);
 		
 		// Chatbox over here.
