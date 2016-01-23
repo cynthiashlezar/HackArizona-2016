@@ -48,5 +48,7 @@ public class DraftboardGUI extends JFrame {
 		chatboxScroll.setPreferredSize(new Dimension(400, screenSize.height));
 		this.add(chatboxScroll, BorderLayout.EAST);
 	}
+	
+	
 
 }

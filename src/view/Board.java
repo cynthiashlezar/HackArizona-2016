@@ -32,14 +32,18 @@ public class Board extends JPanel {
 	
 	public Board() {
 		draftboard = new Draftboard();
+		// debug
+		draftboard.addNode(new CirclePost("whatever", "lol", new Point(400, 400)));
+		draftboard.addNode(new CirclePost("whateverrrrrr", "lol", new Point(500, 400)));
+		draftboard.addNode(new CirclePost("whateverrrrrr", "lol", new Point(600, 500)));
 		
 		// Reads in images from filenames
-		try {
-			circleNode = ImageIO.read(new File("circle.jpg"));
-			squareNode = ImageIO.read(new File("square.jpg"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			circleNode = ImageIO.read(new File("circle.png"));
+//			squareNode = ImageIO.read(new File("square.png"));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		
 		// Sets Board size to size of screen (w/scrollbars)
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -58,11 +62,11 @@ public class Board extends JPanel {
 		Graphics2D g2 = (Graphics2D) g;
 
 		for(Node n : draftboard.getNodes()) {
-			if(n.getClass() == CirclePost.class) {
-				g2.drawImage(circleNode, dropPoint.x, dropPoint.y, NODE_LENGTH, NODE_LENGTH, null);
-			} else if(n.getClass() == SquarePost.class) {
-				g2.drawImage(squareNode, dropPoint.x, dropPoint.y, NODE_LENGTH, NODE_LENGTH, null);
-			}
+//			if(n.getClass() == CirclePost.class) {
+//				g2.drawImage(circleNode, dropPoint.x, dropPoint.y, NODE_LENGTH, NODE_LENGTH, null);
+//			} else if(n.getClass() == SquarePost.class) {
+//				g2.drawImage(squareNode, dropPoint.x, dropPoint.y, NODE_LENGTH, NODE_LENGTH, null);
+//			}
 			
 			// TODO make it go from corner to corner
 			for(Node r : n.getNodeRefs())
