@@ -9,35 +9,37 @@ public class CirclePost extends Node {
 	private String text;
 	private String shape;
 	private Point location;
+	private int radius;
 	private ArrayList<Node> nodeRefs;
 	
 	public CirclePost (String title, String text, Point location) {
 		super(title, text, location);
 		shape = "circle.jpeg";
+		radius = 100;
 	}
 
 	@Override
-	Point topRight() {
-		// TODO Auto-generated method stub
-		return null;
+	public Point topRight() {
+		Point edge = new Point ();
+		return edge;
 	}
 
 	@Override
-	Point botLeft() {
-		// TODO Auto-generated method stub
-		return null;
+	public Point botLeft() {
+		Point edge = new Point ();
+		return edge;
 	}
 
 	@Override
-	Point topLeft() {
-		// TODO Auto-generated method stub
-		return null;
+	public Point topLeft() {
+		Point edge = new Point ();
+		return edge;
 	}
 
 	@Override
-	Point botRight() {
-		// TODO Auto-generated method stub
-		return null;
+	public Point botRight() {
+		Point edge = new Point ();
+		return edge;
 	}
 	
 	

@@ -30,6 +30,10 @@ public abstract class Node {
 		return text;
 	}
 	
+	public Point getLocation () {
+		return location;
+	}
+	
 	public ArrayList<Node> getNodeRefs () {
 		return nodeRefs;
 	}
@@ -42,8 +46,8 @@ public abstract class Node {
 		this.text = text;
 	}
 	
-	public Point getLocation () {
-		return location;
+	public void setLocation (Point location) {
+		this.location = location;
 	}
 
 	

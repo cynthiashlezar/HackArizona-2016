@@ -8,35 +8,37 @@ public class SquarePost extends Node {
 	private String text;
 	private String shape;
 	private Point location;
+	private int radius;
 	private ArrayList<Node> nodeRefs;
 	
 	public SquarePost (String title, String text, Point location) {
 		super(title, text, location);
-		shape = "circle.jpeg";
+		shape = "square.jpeg";
+		radius = 100;
 	}
 
 	@Override
-	Point topRight() {
-		// TODO Auto-generated method stub
-		return null;
+	public Point topRight() {
+		Point edge = new Point ((int)(this.location.x + radius * Math.cos(Math.PI / 4)), (int)(this.location.y + radius * Math.sin(Math.PI / 4)));
+		return edge;
 	}
 
 	@Override
-	Point botLeft() {
-		// TODO Auto-generated method stub
-		return null;
+	public Point botLeft() {
+		Point edge = new Point ((int)(this.location.x + radius * Math.cos(5 * Math.PI / 4)), (int)(this.location.y + radius * Math.sin(5 * Math.PI / 4)));
+		return edge;
 	}
 
 	@Override
-	Point topLeft() {
-		// TODO Auto-generated method stub
-		return null;
+	public Point topLeft() {
+		Point edge = new Point ((int)(this.location.x + radius * Math.cos(3 * Math.PI / 4)), (int)(this.location.y + radius * Math.sin(3 * Math.PI / 4)));
+		return edge;
 	}
 
 	@Override
-	Point botRight() {
-		// TODO Auto-generated method stub
-		return null;
+	public Point botRight() {
+		Point edge = new Point ((int)(this.location.x + radius * Math.cos(7 * Math.PI / 4)), (int)(this.location.y + radius * Math.sin(7 * Math.PI / 4)));
+		return edge;
 	}
 }
 
