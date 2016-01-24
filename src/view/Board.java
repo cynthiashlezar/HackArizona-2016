@@ -60,7 +60,25 @@ public class Board extends JPanel {
 		this.setPreferredSize(new Dimension(2000, 1000));
 		this.setBackground(Color.WHITE);
 	}
-	
+	/*
+	public class EditListener implements MouseListener {
+		public void mouseRightClicked(MouseEvent e) {
+			String reply = "";
+			if(nodeRightClicked) {
+				reply = JOptionPane.showInputDialog("Enter New Text: ");
+				for(int i = 0; i < draftboard.getNodes().size(); i++) {
+					if(e.getPoint().x >= draftboard.getNodes.get(i).getLocation().x &&
+					   e.getPoint().x <= 100 + draftboard.getNodes.get(i).getLocation().x &&
+					   e.getPoint().y >= draftboard.getNodes.get(i).getLocation().y &&
+					   e.getPoint().y <= 100 + draftboard.getNodes.get(i).getLocation().y) {
+						
+						
+					   }
+				}
+			}
+		}
+	}
+	*/
 	public class DrawListener implements MouseListener {
 
 		@Override
@@ -68,12 +86,16 @@ public class Board extends JPanel {
 			String reply = "";
 			if(drawState == 1) {
 				reply = JOptionPane.showInputDialog("Enter Text: ");
-				draftboard.addNode(new CirclePost(reply, reply, e.getPoint()));
-				repaint();
+				if(reply != null) {
+					draftboard.addNode(new CirclePost(reply, reply, e.getPoint()));
+					repaint();
+				}
 			} else if(drawState == 2) {
 				reply = JOptionPane.showInputDialog("Enter Text: ");
-				draftboard.addNode(new SquarePost(reply, reply, e.getPoint()));
-				repaint();
+				if(reply != null) {
+					draftboard.addNode(new CirclePost(reply, reply, e.getPoint()));
+					repaint();
+				}
 			} else if(nodeClicked) {
 				for(int i = 0; i < draftboard.getNodes().size(); i++) {
 					if(e.getPoint().distance(new Point(draftboard.getNodes().get(i).getLocation().x + NODE_LENGTH / 2,
