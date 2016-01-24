@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -87,6 +89,7 @@ public class Chatbox extends JPanel {
 		this.add(theChat);
 		userMessage = new JTextField();
 		userMessage.setColumns(6);
+		userMessage.addActionListener(new SendListener());
 		this.add(userMessage);
 		enter = new JButton("Enter");
 		this.add(enter);
@@ -186,5 +189,6 @@ public class Chatbox extends JPanel {
 		}
 
 	}
+
 
 }
