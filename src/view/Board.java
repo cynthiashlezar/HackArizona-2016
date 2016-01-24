@@ -120,6 +120,11 @@ public class Board extends JPanel {
 				draftboard.addNode(new SquarePost(reply, reply, e.getPoint()));
 				repaint();
 			} else if(nodeClicked) {
+				/*
+				 * Attempts to add the node clicked in this mouse event to the node previously clicked's references,
+				 * linking the two. Monstrous if statement checks if the the point clicked is within 50 pixels of
+				 * the middle of any other Node currently drawn.
+				 */
 				for(int i = 0; i < draftboard.getNodes().size(); i++) {
 					if(e.getPoint().distance(new Point(draftboard.getNodes().get(i).getLocation().x + NODE_LENGTH / 2,
 							draftboard.getNodes().get(i).getLocation().y + NODE_LENGTH / 2)) < NODE_LENGTH / 2 &&
