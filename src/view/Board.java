@@ -130,15 +130,18 @@ public class Board extends JPanel {
 		g2.setColor(new Color(92, 221, 92));
 		g2.setStroke(new BasicStroke(10));
 		for(Node n : draftboard.getNodes()) {
-			for(Node r : n.getNodeRefs())
+			for(Node r : n.getNodeRefs()) {
+				g2.setColor(new Color(92, 221, 92));
+				g2.setStroke(new BasicStroke(10));
 				g2.drawLine(n.getLocation().x + NODE_LENGTH / 2, n.getLocation().y + NODE_LENGTH / 2,
 						r.getLocation().x + NODE_LENGTH / 2, r.getLocation().y + NODE_LENGTH / 2);
-			
+			}
 			if(n.getClass() == CirclePost.class) {
 				g2.drawImage(circleNode, n.getLocation().x, n.getLocation().y, NODE_LENGTH, NODE_LENGTH, null);
 				g2.setColor(Color.BLACK);
 				g2.drawString(n.getText(), n.getLocation().x + 50, n.getLocation().y + 50);
 			} else if(n.getClass() == SquarePost.class) {
+
 				g2.drawImage(squareNode, n.getLocation().x, n.getLocation().y, NODE_LENGTH, NODE_LENGTH, null);
 				g2.setColor(Color.BLACK);
 				g2.drawString(n.getText(), n.getLocation().x + 50, n.getLocation().y + 50);
