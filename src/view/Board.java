@@ -39,12 +39,7 @@ public class Board extends JPanel {
 	
 	public Board() {
 		draftboard = new Draftboard();
-		// debug
-		draftboard.addNode(new CirclePost("whatever", "lol", new Point(400, 400)));
-		draftboard.addNode(new CirclePost("whateverrrrrr", "lol", new Point(500, 400)));
-		draftboard.addNode(new SquarePost("whateverrrrrr", "lol", new Point(600, 500)));
-		draftboard.getNodes().get(0).addNodeRef(draftboard.getNodes().get(1));
-		draftboard.getNodes().get(0).addNodeRef(draftboard.getNodes().get(2));
+		
 
 		this.addMouseListener(new DrawListener());
 		
