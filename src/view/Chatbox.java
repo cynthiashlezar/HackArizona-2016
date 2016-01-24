@@ -74,7 +74,7 @@ public class Chatbox extends JPanel {
 		aChat.setEditable(false);
 		aChat.setLineWrap(true);
 		theChat = new JScrollPane(aChat); //, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
-		this.add(theChat, BorderLayout.EAST);
+		this.add(theChat);
 		userMessage = new JTextField();
 		userMessage.setColumns(26);
 		userMessage.addActionListener(new SendListener());
