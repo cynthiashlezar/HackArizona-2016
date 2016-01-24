@@ -36,8 +36,10 @@ public class Board extends JPanel {
 		// debug
 		draftboard.addNode(new CirclePost("whatever", "lol", new Point(400, 400)));
 		draftboard.addNode(new CirclePost("whateverrrrrr", "lol", new Point(500, 400)));
-		draftboard.addNode(new CirclePost("whateverrrrrr", "lol", new Point(600, 500)));
-		
+		draftboard.addNode(new SquarePost("whateverrrrrr", "lol", new Point(600, 500)));
+		draftboard.getNodes().get(0).addNodeRef(draftboard.getNodes().get(1));
+		draftboard.getNodes().get(0).addNodeRef(draftboard.getNodes().get(2));
+
 		// Reads in images from filenames
 
 		try {
@@ -66,15 +68,17 @@ public class Board extends JPanel {
 		g2.setColor(Color.BLACK);
 		
 		for(Node n : draftboard.getNodes()) {
+			// TODO make it go from corner to corner
+			for(Node r : n.getNodeRefs())
+				g2.drawLine(n.getLocation().x + NODE_LENGTH / 2, n.getLocation().y + NODE_LENGTH / 2,
+						r.getLocation().x + NODE_LENGTH / 2, r.getLocation().y + NODE_LENGTH / 2);
+			
 			if(n.getClass() == CirclePost.class) {
 				g2.drawImage(circleNode, n.getLocation().x, n.getLocation().y, NODE_LENGTH, NODE_LENGTH, null);
 			} else if(n.getClass() == SquarePost.class) {
 				g2.drawImage(squareNode, n.getLocation().x, n.getLocation().y, NODE_LENGTH, NODE_LENGTH, null);
 			}
 			
-			// TODO make it go from corner to corner
-			for(Node r : n.getNodeRefs())
-				g2.drawLine(n.getLocation().x, n.getLocation().y, r.getLocation().x, r.getLocation().y);
 		}
 	}
 }
