@@ -11,7 +11,6 @@ public class Draftboard {
 	
 	public Draftboard() {
 		nodes = new ArrayList<Node>();
-		//arrows = new ArrayList<Arrow>();
 		consolidationMode = false;
 		consolidationList = new ArrayList<Node>();
 	}

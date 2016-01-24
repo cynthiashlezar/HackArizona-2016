@@ -2,6 +2,10 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.net.UnknownHostException;
 
@@ -18,6 +22,7 @@ import javax.swing.JScrollPane;
  */
 
 public class DraftboardGUI extends JFrame {
+
 	private Board board;
 	private Chatbox chatbox;
 	
@@ -31,6 +36,7 @@ public class DraftboardGUI extends JFrame {
 		
 		board = new Board();
 		chatbox = new Chatbox();
+		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setSize(screenSize);
 		
@@ -43,6 +49,8 @@ public class DraftboardGUI extends JFrame {
 		JPanel toolboxPanel = new JPanel(new BorderLayout());
 		JButton circle = new JButton("Circle");
 		JButton square = new JButton("Square");
+		circle.addActionListener(new CircleListener());
+		square.addActionListener(new SquareListener());
 		toolboxPanel.setPreferredSize(new Dimension(screenSize.width, 200));
 		toolboxPanel.add(circle, BorderLayout.WEST);
 		toolboxPanel.add(square, BorderLayout.CENTER);
@@ -53,6 +61,23 @@ public class DraftboardGUI extends JFrame {
 		this.add(chatbox, BorderLayout.EAST);
 	}
 	
-	
+	public class SquareListener implements ActionListener {
 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(board.getDrawState() == 2) board.setDrawState(0);
+			else board.setDrawState(2);
+		}
+
+	}
+
+	public class CircleListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(board.getDrawState() == 1) board.setDrawState(0);
+			else board.setDrawState(1);
+		}
+
+	}
 }

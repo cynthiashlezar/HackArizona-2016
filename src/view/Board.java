@@ -7,10 +7,11 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -29,6 +30,9 @@ public class Board extends JPanel {
 	private Draftboard draftboard;
 	private Image circleNode, squareNode;
 	private Point dropPoint;
+	private int drawState; // 0 is default, 1 is circles, 2 is squares
+	private boolean nodeClicked;
+	private int clickedNodeIndex;
 	private final int NODE_LENGTH = 100;
 	
 	public Board() {
@@ -40,6 +44,8 @@ public class Board extends JPanel {
 		draftboard.getNodes().get(0).addNodeRef(draftboard.getNodes().get(1));
 		draftboard.getNodes().get(0).addNodeRef(draftboard.getNodes().get(2));
 
+		this.addMouseListener(new DrawListener());
+		
 		// Reads in images from filenames
 
 		try {
@@ -58,6 +64,61 @@ public class Board extends JPanel {
 		this.setBackground(Color.WHITE);
 	}
 	
+	public class DrawListener implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			if(drawState == 1) {
+				draftboard.addNode(new CirclePost("", "", e.getPoint()));
+				repaint();
+			} else if(drawState == 2) {
+				draftboard.addNode(new SquarePost("", "", e.getPoint()));
+				repaint();
+			} else if(nodeClicked) {
+				for(int i = 0; i < draftboard.getNodes().size(); i++) {
+					if(e.getPoint().distance(draftboard.getNodes().get(i).getLocation()) < NODE_LENGTH &&
+							i != clickedNodeIndex) {
+						draftboard.getNodes().get(clickedNodeIndex).addNodeRef(draftboard.getNodes().get(i));
+					}
+				}
+				nodeClicked = false;
+				repaint();
+			} else {
+				for(int i = 0; i < draftboard.getNodes().size(); i++) {
+					if(e.getPoint().distance(draftboard.getNodes().get(i).getLocation()) < NODE_LENGTH) {
+						clickedNodeIndex = i;
+						nodeClicked = true;
+					}
+				}
+			}
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+	}
+	
 	/* 
 	 * paintComponent draws whenever repaint() is called. It draws the nodes and lines between the nodes.
 	 */
@@ -68,7 +129,6 @@ public class Board extends JPanel {
 		g2.setColor(Color.BLACK);
 		
 		for(Node n : draftboard.getNodes()) {
-			// TODO make it go from corner to corner
 			for(Node r : n.getNodeRefs())
 				g2.drawLine(n.getLocation().x + NODE_LENGTH / 2, n.getLocation().y + NODE_LENGTH / 2,
 						r.getLocation().x + NODE_LENGTH / 2, r.getLocation().y + NODE_LENGTH / 2);
@@ -80,5 +140,13 @@ public class Board extends JPanel {
 			}
 			
 		}
+	}
+
+	public void setDrawState(int s) {
+		drawState = s;
+	}
+	
+	public int getDrawState() {
+		return drawState;
 	}
 }
