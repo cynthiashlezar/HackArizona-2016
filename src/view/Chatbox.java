@@ -84,9 +84,10 @@ public class Chatbox extends JPanel {
 		this.add(logout);
 		logout.setEnabled(false);
 		logout.addActionListener(new LogoutListener());
-		aChat = new JTextArea(40, 32);
+		aChat = new JTextArea(30, 32);
 		aChat.setEditable(false);
-		theChat = new JScrollPane(aChat);
+		aChat.setLineWrap(true);
+		theChat = new JScrollPane(aChat, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.add(theChat);
 		userMessage = new JTextField();
 		userMessage.setColumns(26);
