@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import model.CirclePost;
@@ -69,11 +70,14 @@ public class Board extends JPanel {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			String reply = "";
 			if(drawState == 1) {
-				draftboard.addNode(new CirclePost("", "", e.getPoint()));
+				reply = JOptionPane.showInputDialog("Enter Text: ");
+				draftboard.addNode(new CirclePost(reply, reply, e.getPoint()));
 				repaint();
 			} else if(drawState == 2) {
-				draftboard.addNode(new SquarePost("", "", e.getPoint()));
+				reply = JOptionPane.showInputDialog("Enter Text: ");
+				draftboard.addNode(new SquarePost(reply, reply, e.getPoint()));
 				repaint();
 			} else if(nodeClicked) {
 				for(int i = 0; i < draftboard.getNodes().size(); i++) {
