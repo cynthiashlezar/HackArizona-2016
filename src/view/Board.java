@@ -136,8 +136,12 @@ public class Board extends JPanel {
 			
 			if(n.getClass() == CirclePost.class) {
 				g2.drawImage(circleNode, n.getLocation().x, n.getLocation().y, NODE_LENGTH, NODE_LENGTH, null);
+				g2.setColor(Color.BLACK);
+				g2.drawString(n.getText(), n.getLocation().x + 50, n.getLocation().y + 50);
 			} else if(n.getClass() == SquarePost.class) {
 				g2.drawImage(squareNode, n.getLocation().x, n.getLocation().y, NODE_LENGTH, NODE_LENGTH, null);
+				g2.setColor(Color.BLACK);
+				g2.drawString(n.getText(), n.getLocation().x + 50, n.getLocation().y + 50);
 			}
 			
 		}
