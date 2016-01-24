@@ -76,7 +76,8 @@ public class Board extends JPanel {
 				repaint();
 			} else if(nodeClicked) {
 				for(int i = 0; i < draftboard.getNodes().size(); i++) {
-					if(e.getPoint().distance(draftboard.getNodes().get(i).getLocation()) < NODE_LENGTH &&
+					if(e.getPoint().distance(new Point(draftboard.getNodes().get(i).getLocation().x + NODE_LENGTH / 2,
+							draftboard.getNodes().get(i).getLocation().y + NODE_LENGTH / 2)) < NODE_LENGTH / 2 &&
 							i != clickedNodeIndex) {
 						draftboard.getNodes().get(clickedNodeIndex).addNodeRef(draftboard.getNodes().get(i));
 					}
