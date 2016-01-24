@@ -1,10 +1,13 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -86,11 +89,18 @@ public class Chatbox extends JPanel {
 		this.add(theChat);
 		userMessage = new JTextField();
 		userMessage.setColumns(6);
+		userMessage.addActionListener(new SendListener());
 		this.add(userMessage);
 		enter = new JButton("Enter");
 		this.add(enter);
 		enter.setEnabled(false);
 		enter.addActionListener(new SendListener());
+		
+		Color textAreaBG = new Color(172, 237, 237);
+		aChat.setBackground(textAreaBG);
+		logout.setBackground(textAreaBG);
+		enter.setBackground(textAreaBG);
+		login.setBackground(textAreaBG);
 		
 		openConnection();
 		new ServerListener().start();
@@ -123,7 +133,7 @@ public class Chatbox extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				String message = new ChatMessage(userMessage.getText(), username).message();
-				oos.writeObject(message);
+				oos.writeObject(message + "\n");
 				userMessage.setText("");
 			} catch (IOException ex) {
 				cleanUpAndQuit("Couldn't send a message to the server");
@@ -179,5 +189,6 @@ public class Chatbox extends JPanel {
 		}
 
 	}
+
 
 }

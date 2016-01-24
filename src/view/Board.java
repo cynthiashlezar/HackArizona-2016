@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -126,8 +127,8 @@ public class Board extends JPanel {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		
-		g2.setColor(Color.BLACK);
-		
+		g2.setColor(new Color(92, 221, 92));
+		g2.setStroke(new BasicStroke(10));
 		for(Node n : draftboard.getNodes()) {
 			for(Node r : n.getNodeRefs())
 				g2.drawLine(n.getLocation().x + NODE_LENGTH / 2, n.getLocation().y + NODE_LENGTH / 2,
