@@ -1,14 +1,8 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -26,7 +20,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import model.ChatMessage;
-import view.Chatbox.LoginListener;
 
 public class Chatbox extends JPanel {
 	
@@ -47,8 +40,6 @@ public class Chatbox extends JPanel {
 		 * Use button.addActionlistener(new SendListener()) and then write the send message
 		 * code in actionPerformed(ActionEvent e).
 		 */
-	private ArrayList<String> messageList;
-
 	private JTextField usernameTextField;
 	private String username;
 	private JButton login;
@@ -58,8 +49,6 @@ public class Chatbox extends JPanel {
 	private JButton logout;
 	private JTextArea aChat;
 	private JScrollPane theChat;
-	private DefaultListModel<String> finalMessage;
-	private JList<String> displayList;
 	Socket socket;
 	ObjectOutputStream oos;
 	ObjectInputStream ois;
@@ -67,10 +56,7 @@ public class Chatbox extends JPanel {
 	
 
 	public Chatbox() {
-		// server garbage
 				
-		messageList = new ArrayList<String>();
-		displayList = new JList<String>();
 		usernameLabel = new JLabel("Username: ");
 		this.add(usernameLabel);
 		usernameTextField = new JTextField();
