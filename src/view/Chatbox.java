@@ -5,12 +5,18 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -51,9 +57,15 @@ public class Chatbox extends JPanel {
 	private JScrollPane theChat;
 	private DefaultListModel<String> finalMessage;
 	private JList<String> displayList;
+	Socket socket;
+	ObjectOutputStream oos;
+	ObjectInputStream ois;
+	private static final String ADDRESS = "localhost";
 	
 
 	public Chatbox() {
+		// server garbage
+				
 		messageList = new ArrayList<String>();
 		displayList = new JList<String>();
 		usernameLabel = new JLabel("Username: ");
@@ -79,20 +91,65 @@ public class Chatbox extends JPanel {
 		this.add(enter);
 		enter.setEnabled(false);
 		enter.addActionListener(new SendListener());
+		
+		openConnection();
+		new ServerListener().start();
+	}
+	
+	private void openConnection() {
+		/* Our server is on our computer, but make sure to use the same port. */
+		try {
+			socket = new Socket(ADDRESS, ChatServer.SERVER_PORT);
+			oos = new ObjectOutputStream(socket.getOutputStream());
+			ois = new ObjectInputStream(socket.getInputStream());
+		} catch (IOException e) {
+			cleanUpAndQuit("Couldn't connect to the server");
+		}
+	}
+	
+	private void cleanUpAndQuit(String message) {
+		JOptionPane.showMessageDialog(Chatbox.this, message);
+		try {
+			if(socket != null) socket.close();
+		} catch (IOException e) {
+			// Couldn't close the socket, we are in deep trouble. Abandon ship.
+			e.printStackTrace(); 
+		}
 	}
 	
 	public class SendListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String message = new ChatMessage(userMessage.getText(), username).message();
-			aChat.append(message + "\n");
-			userMessage.setText("");
-			
+			try {
+				String message = new ChatMessage(userMessage.getText(), username).message();
+				oos.writeObject(message);
+				userMessage.setText("");
+			} catch (IOException ex) {
+				cleanUpAndQuit("Couldn't send a message to the server");
+			}
 		}
 		
 	}
 	
+	private class ServerListener extends Thread {
+
+		@Override
+		public void run() {
+			try {
+				/* The server sent us a String? Stick it in the JList! */
+				while (true)
+					aChat.append((String) ois.readObject());
+			} catch (IOException e) {
+				cleanUpAndQuit("The server hung up on us. Exiting...");
+			} catch (ClassNotFoundException e) {
+				cleanUpAndQuit("Got something from the server that wasn't a String...");
+			}
+		}
+
+		
+	}
+		
 	public class LogoutListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
