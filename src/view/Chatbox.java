@@ -73,11 +73,12 @@ public class Chatbox extends JPanel {
 		aChat = new JTextArea(30, 32);
 		aChat.setEditable(false);
 		aChat.setLineWrap(true);
-		theChat = new JScrollPane(aChat, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		this.add(theChat);
+		theChat = new JScrollPane(aChat); //, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
+		this.add(theChat, BorderLayout.EAST);
 		userMessage = new JTextField();
 		userMessage.setColumns(26);
 		userMessage.addActionListener(new SendListener());
+		userMessage.setEnabled(false);
 		this.add(userMessage);
 		enter = new JButton("Enter");
 		this.add(enter);
@@ -119,8 +120,6 @@ public class Chatbox extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (!enter.isEnabled()) // You shouldn't be able to input if Enter isn't enabled!
-				return;
 			try {
 				String message = new ChatMessage(userMessage.getText(), username).message();
 				oos.writeObject(message + "\n");
@@ -154,16 +153,19 @@ public class Chatbox extends JPanel {
 		
 		public void actionPerformed(ActionEvent e) {
 			enter.setEnabled(false);
+			userMessage.setEnabled(false);
 			logout.setEnabled(false);
 			usernameLabel.setVisible(true);
 			usernameTextField.setVisible(true);
 			usernameLabel.setText("Username: ");
 			login.setVisible(true);
+			userMessage.setText("");
 			try {
 				oos.writeObject(username + " logged out.\n");
 			} catch (IOException ex) {
 				cleanUpAndQuit("Couldn't send a message to the server");
 			}
+			usernameTextField.requestFocus();
 		}
 	}
 	
@@ -174,6 +176,7 @@ public class Chatbox extends JPanel {
 			if (usernameTextField.getText().length() == 0) // Your username should be at least 1 character long!
 				return;
 			enter.setEnabled(true);
+			userMessage.setEnabled(true);
 			username = usernameTextField.getText();
 			login.setVisible(false);
 			logout.setEnabled(true);
@@ -185,6 +188,7 @@ public class Chatbox extends JPanel {
 			} catch (IOException ex) {
 				cleanUpAndQuit("Couldn't send a message to the server");
 			}
+			userMessage.requestFocus();
 		}
 
 	}
