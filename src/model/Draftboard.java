@@ -5,8 +5,7 @@ import java.util.ArrayList;
 public class Draftboard {
 	
 	private ArrayList<Node> nodes;
-	//ArrayList<Arrow> arrows;
-	private boolean consolidationMode;
+	private boolean consolidationMode, updated;
 	private ArrayList<Node> consolidationList;
 	
 	public Draftboard() {
@@ -58,15 +57,4 @@ public class Draftboard {
 		}
 		switchConsolMode();
 	}
-	
-	/*
-	public void addArrow(Arrow e) {
-		arrows.add(e);
-	}
-	
-	public ArrayList<Arrow> getArrows() {
-		return arrows;
-	}
-	*/
-	
 }

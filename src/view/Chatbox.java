@@ -1,14 +1,8 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -26,7 +20,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import model.ChatMessage;
-import view.Chatbox.LoginListener;
 
 public class Chatbox extends JPanel {
 	
@@ -47,8 +40,6 @@ public class Chatbox extends JPanel {
 		 * Use button.addActionlistener(new SendListener()) and then write the send message
 		 * code in actionPerformed(ActionEvent e).
 		 */
-	private ArrayList<String> messageList;
-
 	private JTextField usernameTextField;
 	private String username;
 	private JButton login;
@@ -58,8 +49,6 @@ public class Chatbox extends JPanel {
 	private JButton logout;
 	private JTextArea aChat;
 	private JScrollPane theChat;
-	private DefaultListModel<String> finalMessage;
-	private JList<String> displayList;
 	Socket socket;
 	ObjectOutputStream oos;
 	ObjectInputStream ois;
@@ -67,10 +56,7 @@ public class Chatbox extends JPanel {
 	
 
 	public Chatbox() {
-		// server garbage
 				
-		messageList = new ArrayList<String>();
-		displayList = new JList<String>();
 		usernameLabel = new JLabel("Username: ");
 		this.add(usernameLabel);
 		usernameTextField = new JTextField();
@@ -84,13 +70,15 @@ public class Chatbox extends JPanel {
 		this.add(logout);
 		logout.setEnabled(false);
 		logout.addActionListener(new LogoutListener());
-		aChat = new JTextArea(40, 32);
+		aChat = new JTextArea(30, 32);
 		aChat.setEditable(false);
-		theChat = new JScrollPane(aChat);
+		aChat.setLineWrap(true);
+		theChat = new JScrollPane(aChat); //, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
 		this.add(theChat);
 		userMessage = new JTextField();
 		userMessage.setColumns(26);
 		userMessage.addActionListener(new SendListener());
+		userMessage.setEnabled(false);
 		this.add(userMessage);
 		enter = new JButton("Enter");
 		this.add(enter);
@@ -132,8 +120,6 @@ public class Chatbox extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (!enter.isEnabled()) // You shouldn't be able to input if Enter isn't enabled!
-				return;
 			try {
 				String message = new ChatMessage(userMessage.getText(), username).message();
 				oos.writeObject(message + "\n");
@@ -167,16 +153,19 @@ public class Chatbox extends JPanel {
 		
 		public void actionPerformed(ActionEvent e) {
 			enter.setEnabled(false);
+			userMessage.setEnabled(false);
 			logout.setEnabled(false);
 			usernameLabel.setVisible(true);
 			usernameTextField.setVisible(true);
 			usernameLabel.setText("Username: ");
 			login.setVisible(true);
+			userMessage.setText("");
 			try {
 				oos.writeObject(username + " logged out.\n");
 			} catch (IOException ex) {
 				cleanUpAndQuit("Couldn't send a message to the server");
 			}
+			usernameTextField.requestFocus();
 		}
 	}
 	
@@ -187,6 +176,7 @@ public class Chatbox extends JPanel {
 			if (usernameTextField.getText().length() == 0) // Your username should be at least 1 character long!
 				return;
 			enter.setEnabled(true);
+			userMessage.setEnabled(true);
 			username = usernameTextField.getText();
 			login.setVisible(false);
 			logout.setEnabled(true);
@@ -198,6 +188,7 @@ public class Chatbox extends JPanel {
 			} catch (IOException ex) {
 				cleanUpAndQuit("Couldn't send a message to the server");
 			}
+			userMessage.requestFocus();
 		}
 
 	}

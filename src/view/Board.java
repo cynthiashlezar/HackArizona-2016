@@ -12,6 +12,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
@@ -31,11 +35,14 @@ public class Board extends JPanel {
 
 	private Draftboard draftboard;
 	private Image circleNode, squareNode;
-	private Point dropPoint;
 	private int drawState; // 0 is default, 1 is circles, 2 is squares
 	private boolean nodeClicked;
 	private int clickedNodeIndex;
 	private final int NODE_LENGTH = 100;
+	Socket socket;
+	ObjectOutputStream oos;
+	ObjectInputStream ois;
+	private static final String ADDRESS = "localhost";
 	
 	public Board() {
 		draftboard = new Draftboard();
@@ -60,25 +67,45 @@ public class Board extends JPanel {
 		this.setPreferredSize(new Dimension(2000, 1000));
 		this.setBackground(Color.WHITE);
 	}
-	/*
-	public class EditListener implements MouseListener {
-		public void mouseRightClicked(MouseEvent e) {
-			String reply = "";
-			if(nodeRightClicked) {
-				reply = JOptionPane.showInputDialog("Enter New Text: ");
-				for(int i = 0; i < draftboard.getNodes().size(); i++) {
-					if(e.getPoint().x >= draftboard.getNodes.get(i).getLocation().x &&
-					   e.getPoint().x <= 100 + draftboard.getNodes.get(i).getLocation().x &&
-					   e.getPoint().y >= draftboard.getNodes.get(i).getLocation().y &&
-					   e.getPoint().y <= 100 + draftboard.getNodes.get(i).getLocation().y) {
-						
-						
-					   }
-				}
-			}
+	
+	private void openConnection() {
+		/* Our server is on our computer, but make sure to use the same port. */
+		try {
+			socket = new Socket(ADDRESS, DrawServer.SERVER_PORT);
+			oos = new ObjectOutputStream(socket.getOutputStream());
+			ois = new ObjectInputStream(socket.getInputStream());
+		} catch (IOException e) {
+			cleanUpAndQuit("Couldn't connect to the server");
 		}
 	}
-	*/
+	
+	private void cleanUpAndQuit(String message) {
+		JOptionPane.showMessageDialog(Board.this, message);
+		try {
+			if(socket != null) socket.close();
+		} catch (IOException e) {
+			// Couldn't close the socket, we are in deep trouble. Abandon ship.
+			e.printStackTrace(); 
+		}
+	}
+	
+	private class ServerListener extends Thread {
+
+		@Override
+		public void run() {
+			try {
+				/* The server sent us an ArrayList, update */
+				while (true) {
+					ArrayList<Node> recievedNodes = (ArrayList<Node>) ois.readObject();
+				}
+			} catch (IOException e) {
+				cleanUpAndQuit("The server hung up on us. Exiting...");
+			} catch (ClassNotFoundException e) {
+				cleanUpAndQuit("Got something from the server that wasn't a String...");
+			}
+		}		
+	}
+	
 	public class DrawListener implements MouseListener {
 
 		@Override
@@ -86,17 +113,18 @@ public class Board extends JPanel {
 			String reply = "";
 			if(drawState == 1) {
 				reply = JOptionPane.showInputDialog("Enter Text: ");
-				if(reply != null) {
-					draftboard.addNode(new CirclePost(reply, reply, e.getPoint()));
-					repaint();
-				}
+				draftboard.addNode(new CirclePost(reply, reply, e.getPoint()));
+				repaint();
 			} else if(drawState == 2) {
 				reply = JOptionPane.showInputDialog("Enter Text: ");
-				if(reply != null) {
-					draftboard.addNode(new CirclePost(reply, reply, e.getPoint()));
-					repaint();
-				}
+				draftboard.addNode(new SquarePost(reply, reply, e.getPoint()));
+				repaint();
 			} else if(nodeClicked) {
+				/*
+				 * Attempts to add the node clicked in this mouse event to the node previously clicked's references,
+				 * linking the two. Monstrous if statement checks if the the point clicked is within 50 pixels of
+				 * the middle of any other Node currently drawn.
+				 */
 				for(int i = 0; i < draftboard.getNodes().size(); i++) {
 					if(e.getPoint().distance(new Point(draftboard.getNodes().get(i).getLocation().x + NODE_LENGTH / 2,
 							draftboard.getNodes().get(i).getLocation().y + NODE_LENGTH / 2)) < NODE_LENGTH / 2 &&
@@ -114,6 +142,13 @@ public class Board extends JPanel {
 					}
 				}
 			}
+			
+			// Regardless of the draw state, it's probably a good idea to write to the server.
+//			try {
+//				oos.writeObject(draftboard.getNodes());
+//			} catch (IOException ex) {
+//				cleanUpAndQuit("Couldn't send nodes to the server");
+//			}
 		}
 
 		@Override
@@ -151,6 +186,7 @@ public class Board extends JPanel {
 		
 		g2.setColor(new Color(92, 221, 92));
 		g2.setStroke(new BasicStroke(10));
+		
 		for(Node n : draftboard.getNodes()) {
 			for(Node r : n.getNodeRefs()) {
 				g2.setColor(new Color(92, 221, 92));
@@ -158,6 +194,9 @@ public class Board extends JPanel {
 				g2.drawLine(n.getLocation().x + NODE_LENGTH / 2, n.getLocation().y + NODE_LENGTH / 2,
 						r.getLocation().x + NODE_LENGTH / 2, r.getLocation().y + NODE_LENGTH / 2);
 			}
+		}
+		
+		for(Node n : draftboard.getNodes()) {
 			if(n.getClass() == CirclePost.class) {
 				g2.drawImage(circleNode, n.getLocation().x, n.getLocation().y, NODE_LENGTH, NODE_LENGTH, null);
 				g2.setColor(Color.BLACK);
