@@ -130,7 +130,7 @@ public class Chatbox extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				String message = new ChatMessage(userMessage.getText(), username).message();
-				oos.writeObject(message);
+				oos.writeObject(message + "\n");
 				userMessage.setText("");
 			} catch (IOException ex) {
 				cleanUpAndQuit("Couldn't send a message to the server");
