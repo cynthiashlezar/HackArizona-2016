@@ -44,8 +44,8 @@ public class DraftboardGUI extends JFrame {
 		JButton circle = new JButton("Circle");
 		JButton square = new JButton("Square");
 		toolboxPanel.setPreferredSize(new Dimension(screenSize.width, 200));
-		toolboxPanel.add(circle);
-		toolboxPanel.add(square);
+		toolboxPanel.add(circle, BorderLayout.WEST);
+		toolboxPanel.add(square, BorderLayout.CENTER);
 		this.add(toolboxPanel, BorderLayout.PAGE_END);
 		
 		// Chatbox over here.
