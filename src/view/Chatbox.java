@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -91,6 +92,12 @@ public class Chatbox extends JPanel {
 		this.add(enter);
 		enter.setEnabled(false);
 		enter.addActionListener(new SendListener());
+		
+		Color textAreaBG = new Color(172, 237, 237);
+		aChat.setBackground(textAreaBG);
+		logout.setBackground(textAreaBG);
+		enter.setBackground(textAreaBG);
+		login.setBackground(textAreaBG);
 		
 		openConnection();
 		new ServerListener().start();

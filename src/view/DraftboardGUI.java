@@ -1,5 +1,6 @@
 package view;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
@@ -38,11 +39,14 @@ public class DraftboardGUI extends JFrame {
 		JScrollPane boardScroll = new JScrollPane(board);
 		boardScroll.setPreferredSize(new Dimension(screenSize));
 		this.add(boardScroll);
+		board.setBackground(new Color(78, 186, 186));
 		
 		// This is where the toolbox will go....eventually.......
 		JPanel toolboxPanel = new JPanel(new BorderLayout());
 		JButton circle = new JButton("Circle");
 		JButton square = new JButton("Square");
+		circle.setBackground(new Color(172, 237, 237));
+		square.setBackground(new Color(172, 237, 237));
 		toolboxPanel.setPreferredSize(new Dimension(screenSize.width, 200));
 		toolboxPanel.add(circle, BorderLayout.WEST);
 		toolboxPanel.add(square, BorderLayout.CENTER);
@@ -51,6 +55,7 @@ public class DraftboardGUI extends JFrame {
 		// Chatbox over here.
 		chatbox.setPreferredSize(new Dimension(400, screenSize.height));
 		this.add(chatbox, BorderLayout.EAST);
+		chatbox.setBackground(new Color(78, 186, 186));
 	}
 	
 	
