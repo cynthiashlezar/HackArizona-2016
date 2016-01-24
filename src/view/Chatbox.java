@@ -172,8 +172,11 @@ public class Chatbox extends JPanel {
 			usernameTextField.setVisible(true);
 			usernameLabel.setText("Username: ");
 			login.setVisible(true);
-			
-			
+			try {
+				oos.writeObject(username + " logged out.\n");
+			} catch (IOException ex) {
+				cleanUpAndQuit("Couldn't send a message to the server");
+			}
 		}
 	}
 	
@@ -190,7 +193,11 @@ public class Chatbox extends JPanel {
 			usernameTextField.setText("");
 			usernameTextField.setVisible(false);
 			usernameLabel.setText("Username: " + username);
-			
+			try {
+				oos.writeObject(username + " logged in.\n");
+			} catch (IOException ex) {
+				cleanUpAndQuit("Couldn't send a message to the server");
+			}
 		}
 
 	}
