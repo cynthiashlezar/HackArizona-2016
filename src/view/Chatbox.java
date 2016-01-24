@@ -56,7 +56,6 @@ public class Chatbox extends JPanel {
 	public Chatbox() {
 		messageList = new ArrayList<String>();
 		displayList = new JList<String>();
-		
 		usernameLabel = new JLabel("Username: ");
 		this.add(usernameLabel);
 		usernameTextField = new JTextField();
@@ -73,8 +72,6 @@ public class Chatbox extends JPanel {
 		aChat.setEditable(false);
 		theChat = new JScrollPane(aChat);
 		this.add(theChat);
-		//messageLog.add("hello!");
-		//this.add(messageLog);
 		userMessage = new JTextField();
 		userMessage.setColumns(6);
 		this.add(userMessage);
@@ -125,6 +122,5 @@ public class Chatbox extends JPanel {
 		}
 
 	}
-
 
 }
