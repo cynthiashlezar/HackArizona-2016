@@ -74,7 +74,8 @@ public class Chatbox extends JPanel {
 		usernameLabel = new JLabel("Username: ");
 		this.add(usernameLabel);
 		usernameTextField = new JTextField();
-		usernameTextField.setColumns(5);
+		usernameTextField.setColumns(12);
+		usernameTextField.addActionListener(new LoginListener());
 		this.add(usernameTextField);
 		login = new JButton("Login");
 		logout = new JButton("Logout");
@@ -83,12 +84,12 @@ public class Chatbox extends JPanel {
 		this.add(logout);
 		logout.setEnabled(false);
 		logout.addActionListener(new LogoutListener());
-		aChat = new JTextArea(20, 32);
+		aChat = new JTextArea(40, 32);
 		aChat.setEditable(false);
 		theChat = new JScrollPane(aChat);
 		this.add(theChat);
 		userMessage = new JTextField();
-		userMessage.setColumns(6);
+		userMessage.setColumns(26);
 		userMessage.addActionListener(new SendListener());
 		this.add(userMessage);
 		enter = new JButton("Enter");
@@ -131,6 +132,8 @@ public class Chatbox extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			if (!enter.isEnabled()) // You shouldn't be able to input if Enter isn't enabled!
+				return;
 			try {
 				String message = new ChatMessage(userMessage.getText(), username).message();
 				oos.writeObject(message + "\n");
@@ -178,6 +181,8 @@ public class Chatbox extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			if (usernameTextField.getText().length() == 0) // Your username should be at least 1 character long!
+				return;
 			enter.setEnabled(true);
 			username = usernameTextField.getText();
 			login.setVisible(false);
